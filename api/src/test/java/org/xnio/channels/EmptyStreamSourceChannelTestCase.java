@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -124,7 +125,7 @@ public class EmptyStreamSourceChannelTestCase {
 
     @Test
     public void transferToFileChannel() throws Exception {
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -262,7 +263,7 @@ public class EmptyStreamSourceChannelTestCase {
         assertFalse(channel.isReadResumed());
         assertFalse(channel.isOpen());
         assertEquals(-1, channel.read(ByteBuffer.allocate(15)));
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();

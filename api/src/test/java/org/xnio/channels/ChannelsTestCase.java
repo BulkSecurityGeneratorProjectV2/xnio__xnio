@@ -44,6 +44,7 @@ import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 import java.util.function.LongFunction;
 
@@ -476,7 +477,7 @@ public class ChannelsTestCase {
         final ConnectedStreamChannelMock channelMock = new ConnectedStreamChannelMock();
         channelMock.setReadData("test");
         channelMock.enableRead(true);
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -496,7 +497,7 @@ public class ChannelsTestCase {
     public void transferBlockingToFile2() throws IOException, InterruptedException {
         final ConnectedStreamChannelMock channelMock = new ConnectedStreamChannelMock();
         channelMock.setReadData("test", "12345");
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -520,7 +521,7 @@ public class ChannelsTestCase {
     @Test
     public void transferBlockingFromFile1() throws IOException {
         final ConnectedStreamChannelMock channelMock = new ConnectedStreamChannelMock();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -541,7 +542,7 @@ public class ChannelsTestCase {
     public void transferBlockingFromFile2() throws IOException, InterruptedException {
         final ConnectedStreamChannelMock channelMock = new ConnectedStreamChannelMock();
         channelMock.enableWrite(false);
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();

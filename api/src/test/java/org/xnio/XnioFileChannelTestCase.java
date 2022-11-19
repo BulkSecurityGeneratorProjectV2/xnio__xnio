@@ -33,6 +33,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.Files;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class XnioFileChannelTestCase {
 
     @Before
     public void initFileChannel() throws IOException {
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         randomAccessFile = new RandomAccessFile(file, "rw");
         fileChannel = new XnioFileChannel(randomAccessFile.getChannel());

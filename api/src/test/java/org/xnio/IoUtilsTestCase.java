@@ -44,6 +44,7 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.spi.SelectorProvider;
+import java.nio.file.Files;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
@@ -223,7 +224,7 @@ public final class IoUtilsTestCase extends TestCase {
     }
 
     public void testSafeCloseZipFile() throws IOException {
-        final File file = File.createTempFile("foo", ".zip");
+        final File file = Files.createTempFile("foo", ".zip").toFile();
         file.deleteOnExit();
         final ZipOutputStream zipOutput = new ZipOutputStream(new FileOutputStream(file));
         zipOutput.close();

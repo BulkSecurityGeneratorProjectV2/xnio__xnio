@@ -38,6 +38,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -576,7 +577,7 @@ public class ChannelListenersTestCase {
         final TestChannelListener<ConnectedStreamChannelMock> listener = new TestChannelListener<ConnectedStreamChannelMock>();
         final TestExceptionHandler<ConnectedStreamChannelMock> exceptionHandler = new TestExceptionHandler<ConnectedStreamChannelMock>();
         final FailingChannel channel = new FailingChannel();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -646,7 +647,7 @@ public class ChannelListenersTestCase {
         final TestExceptionHandler<ConnectedStreamChannelMock> exceptionHandler = new TestExceptionHandler<ConnectedStreamChannelMock>();
         final FailingChannel channel = new FailingChannel();
         channel.setReadData("test");
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannelWrapper fileChannel = new FileChannelWrapper(randomAccessFile.getChannel());

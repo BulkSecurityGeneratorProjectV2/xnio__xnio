@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.NonWritableChannelException;
+import java.nio.file.Files;
 import java.security.AccessControlException;
 import java.security.AccessController;
 import java.security.GeneralSecurityException;
@@ -176,7 +177,7 @@ public class XnioTestCase {
     }
 
     private File createTempFile() throws IOException {
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         return file;
     }

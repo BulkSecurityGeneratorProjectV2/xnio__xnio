@@ -30,6 +30,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -199,7 +200,7 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
         final ByteBuffer transferedMessage1 = ByteBuffer.allocate(6);
         final ByteBuffer transferedMessage2 = ByteBuffer.allocate(16);
         buffer.put("transfered message".getBytes()).flip();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -243,7 +244,7 @@ public abstract class AbstractStreamSinkSourceChannelTest<S extends StreamSinkCh
         final ByteBuffer transferedMessage1 = ByteBuffer.allocate(6);
         final ByteBuffer transferedMessage2 = ByteBuffer.allocate(16);
         buffer.put("transferred message".getBytes()).flip();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();

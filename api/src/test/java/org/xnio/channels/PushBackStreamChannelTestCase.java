@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
@@ -286,7 +287,7 @@ public class PushBackStreamChannelTestCase {
         final Pool<ByteBuffer> messagePool = new ByteBufferSlicePool(15, 15);
         final Pooled<ByteBuffer> messageBuffer = messagePool.allocate();
         messageBuffer.getResource().put("pushed message".getBytes("UTF-8")).flip();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -305,7 +306,7 @@ public class PushBackStreamChannelTestCase {
     @Test
     public void transferFirstChannelDataToFileChannel() throws IOException {
         firstChannel.setReadData("data", "from", "first", "channel");
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -325,7 +326,7 @@ public class PushBackStreamChannelTestCase {
         final Pool<ByteBuffer> messagePool = new ByteBufferSlicePool(5, 5);
         final Pooled<ByteBuffer> messageBuffer = messagePool.allocate();
         messageBuffer.getResource().put("nio".getBytes("UTF-8")).flip();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -352,7 +353,7 @@ public class PushBackStreamChannelTestCase {
         messageBuffer1.getResource().put("io".getBytes("UTF-8")).flip();
         final Pooled<ByteBuffer> messageBuffer2 = messagePool.allocate();
         messageBuffer2.getResource().put("n".getBytes("UTF-8")).flip();
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -498,7 +499,7 @@ public class PushBackStreamChannelTestCase {
         assertEquals(-1, channel.read(buffer));
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}, 0, 1));
         // cannot transfer
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -539,7 +540,7 @@ public class PushBackStreamChannelTestCase {
         assertEquals(-1, channel.read(buffer));
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}, 0, 1));
         // cannot transfer
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -581,7 +582,7 @@ public class PushBackStreamChannelTestCase {
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}));
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}, 0, 1));
         // cannot transfer
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {
@@ -628,7 +629,7 @@ public class PushBackStreamChannelTestCase {
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}));
         assertEquals(-1, channel.read(new ByteBuffer[] {buffer}, 0, 1));
         // cannot transfer
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final FileChannel fileChannel = new RandomAccessFile(file, "rw").getChannel();
         try {

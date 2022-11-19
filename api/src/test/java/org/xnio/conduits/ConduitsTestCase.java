@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
@@ -63,7 +64,7 @@ public class ConduitsTestCase {
     public void transferToFile1() throws IOException {
         conduitMock.setReadData("test");
         conduitMock.enableReads(true);
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -90,7 +91,7 @@ public class ConduitsTestCase {
     @Test
     public void transferToFile2() throws IOException {
         conduitMock.setReadData("test", "12345");
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -116,7 +117,7 @@ public class ConduitsTestCase {
 
     @Test
     public void transferFromFile1() throws IOException {
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
@@ -138,7 +139,7 @@ public class ConduitsTestCase {
     @Test
     public void transferFromFile2() throws IOException {
         conduitMock.enableWrites(false);
-        final File file = File.createTempFile("test", ".txt");
+        final File file = Files.createTempFile("test", ".txt").toFile();
         file.deleteOnExit();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         final FileChannel fileChannel = randomAccessFile.getChannel();
